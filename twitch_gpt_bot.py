@@ -1,15 +1,14 @@
 import os
 from twitchio.ext import commands
+from chatgpt import call_chatgpt
 
 # 環境変数から設定を読み込む
 channel_name = os.environ["TWITCH_CHANNEL_NAME"]
-bot_name = os.environ["TWITCH_BOT_NAME"]
 oauth_token = os.environ["TWITCH_OAUTH_TOKEN"]
 
 # ボットのインスタンスを作成
 bot = commands.Bot(
     token=oauth_token,
-    nick=bot_name,
     prefix="!",
     initial_channels=[channel_name],
 )
@@ -17,7 +16,17 @@ bot = commands.Bot(
 # シンプルなコマンドの例
 @bot.command(name="hello")
 async def hello(ctx):
-    await ctx.send(f"こんにちは、{ctx.author.name}さん！")
+    await ctx.send(f"Hello!! {ctx.author.name}")
+
+@bot.command(name="chatgpt")
+async def chatgpt(ctx):
+    await ctx.send("Now requesting to ChatGPT..")
+
+    # Call ChatGPT API
+    response = call_chatgpt(ctx.message.content)
+
+    # Send ChatGPT response
+    await ctx.send(response)
 
 # ボットを実行
 if __name__ == "__main__":

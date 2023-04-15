@@ -33,3 +33,4 @@ async def chatgpt(ctx):
 if __name__ == "__main__":
     print("twitch_gpt_bot is running...")
     bot.run()
+    print("twitch_gpt_bot is stopped.")
